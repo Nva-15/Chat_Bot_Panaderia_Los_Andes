@@ -15,6 +15,7 @@ from inicializar_entorno import inicializar_entorno
 from scheduler import iniciar_scheduler, listar_tareas, ejecutar_ahora
 from prompts import PROMPTS, NORMA_MONEDA
 from chatbot import consultar_groq
+from intenciones import preparar_consulta
 from pdf_export import generar_pdf_reporte, generar_pdf_comparacion
 from pruebas_shot import ejecutar_comparacion
 from shot_prompts import DATOS_VENTAS_PRUEBA, PREGUNTA
@@ -91,6 +92,7 @@ with st.sidebar:
     if st.button("🚪 Cerrar sesión"):
         st.session_state.role = None
         st.session_state.messages = []
+        st.session_state.pop("ctx_chat", None)
         st.rerun()
 
 # CHATBOT
@@ -105,62 +107,34 @@ if opcion == "💬 Chatbot":
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Detección simple de intención
-        p = prompt.lower()
-        if any(w in p for w in ["venta", "vend", "ingreso"]):
-            cfg = PROMPTS["P19_consulta_ventas"]
-            hoy_iso = date.today().isoformat()
-            ayer_iso = (date.today() - timedelta(days=1)).isoformat()
-            if "ayer" in p:
-                fecha_consulta = ayer_iso
-            elif "hoy" in p:
-                fecha_consulta = hoy_iso
-            else:
-                fecha_consulta = st.session_state.get(
-                    "fecha_consulta_ventas", hoy_iso
-                )
-            st.session_state.fecha_consulta_ventas = fecha_consulta
-
-            etiqueta = (
-                "hoy" if fecha_consulta == hoy_iso
-                else "ayer" if fecha_consulta == ayer_iso
-                else fecha_consulta
-            )
-            etiqueta = f"{etiqueta} ({fecha_consulta})"
-
-            ventas = obtener_ventas_dia(fecha_consulta)
-            total = round(ventas["total"].sum(), 2) if not ventas.empty else 0.0
-            top = obtener_top_productos(fecha_consulta)
-            datos = (
-                f"Total vendido {etiqueta}: S/ {total:.2f}\n"
-                f"Detalle por producto ese día (cantidad y monto en soles):\n"
-                f"{top.to_csv(index=False) if not top.empty else 'Sin ventas registradas ese día.'}"
-            )
-            user_prompt = cfg["usuario"].format(pregunta=prompt, datos=datos)
-
-        elif any(w in p for w in ["stock", "queda", "inventario"]):
-            cfg = PROMPTS["P18_consulta_stock"]
-            datos = obtener_stock().to_csv(index=False)
-            user_prompt = cfg["usuario"].format(pregunta=prompt, datos=datos)
-
-        else:
-            cfg = PROMPTS["P20_ayuda_sistema"]
-            user_prompt = cfg["usuario"].format(pregunta=prompt)
-
         # Historial previo acotado
         historial = st.session_state.messages[:-1][-10:]
 
         with st.chat_message("assistant"):
             with st.spinner("Pandito está pensando..."):
-                respuesta = consultar_groq(
-                    messages=[
-                        {"role": "system", "content": f"{cfg['sistema']} {NORMA_MONEDA}"},
-                        *historial,
-                        {"role": "user", "content": user_prompt}
-                    ],
-                    temperature=cfg["temperature"],
-                    max_tokens=cfg["max_tokens"]
+                # Detecta intención, fechas y permisos; arma el prompt con datos reales
+                consulta = preparar_consulta(
+                    prompt,
+                    ctx=st.session_state.get("ctx_chat"),
+                    rol=st.session_state.role,
                 )
+                st.session_state.ctx_chat = consulta["ctx"]
+                if consulta["respuesta_directa"]:
+                    # Saludo, fuera de tema o sin permiso: no se llama a Groq
+                    respuesta = consulta["respuesta_directa"]
+                else:
+                    cfg = PROMPTS[consulta["clave"]]
+                    respuesta = consultar_groq(
+                        messages=[
+                            {"role": "system", "content": (
+                                f"{cfg['sistema']} {NORMA_MONEDA} "
+                                f"{consulta['sistema_extra']}")},
+                            *historial,
+                            {"role": "user", "content": consulta["user_prompt"]}
+                        ],
+                        temperature=cfg["temperature"],
+                        max_tokens=consulta["max_tokens"]
+                    )
             st.markdown(respuesta)
             st.session_state.messages.append(
                 {"role": "assistant", "content": respuesta}

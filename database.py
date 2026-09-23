@@ -116,3 +116,26 @@ def obtener_notificaciones_no_leidas():
             FROM notificaciones WHERE leida = 0
             ORDER BY fecha DESC
         """, conn)
+
+
+def obtener_ventas_rango(desde, hasta):
+    """Ventas entre dos fechas ISO (inclusive), con el costo de lo vendido."""
+    with _conn() as conn:
+        return pd.read_sql_query("""
+            SELECT v.fecha, v.hora, p.nombre AS producto, v.cantidad, v.total,
+                   v.cantidad * p.costo AS costo_total
+            FROM ventas v
+            JOIN productos p ON p.id = v.producto_id
+            WHERE v.fecha BETWEEN ? AND ?
+            ORDER BY v.fecha, v.hora
+        """, conn, params=(desde, hasta))
+
+def obtener_margen_productos():
+    """Precio, costo y margen unitario (soles y %) de cada producto."""
+    with _conn() as conn:
+        return pd.read_sql_query("""
+            SELECT nombre AS producto, precio, costo,
+                   ROUND(precio - costo, 2) AS margen_unitario,
+                   ROUND((precio - costo) * 100.0 / precio, 1) AS margen_pct
+            FROM productos ORDER BY margen_pct DESC
+        """, conn)

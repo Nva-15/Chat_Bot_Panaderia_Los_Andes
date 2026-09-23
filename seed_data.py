@@ -1,4 +1,5 @@
 import sqlite3
+import math
 import random
 import sys
 from datetime import date, timedelta
@@ -110,27 +111,48 @@ def _factor_dia(fecha):
         return random.uniform(0.7, 0.9)
     return random.uniform(0.9, 1.2)
 
-def _cantidad_para_producto(nombre):
+def _rango_cantidad(nombre):
+    """Rango (mín, máx) de unidades por venta según el producto."""
     if nombre == "Pan francés":
-        return random.randint(5, 20)
+        return (5, 20)
     if nombre in ("Alfajor", "Bizcocho", "Galleta surtida"):
-        return random.randint(1, 6)
+        return (1, 6)
     if nombre in ("Torta de chocolate", "Pan de molde", "Croissant"):
-        return random.randint(1, 3)
-    return random.randint(1, 8)
+        return (1, 3)
+    return (1, 8)
 
-# 4. VENTAS (incluye HOY, descuenta stock)
+def _cantidad_para_producto(nombre):
+    return random.randint(*_rango_cantidad(nombre))
+
+def _stock_objetivo(nombre, stock_minimo):
+    """
+    Nivel al que se repone cada producto: su stock mínimo más la demanda de un
+    día pico (ventas máx. por día × popularidad × cantidad media × margen 30 %).
+    """
+    ventas_pico = 40 * 1.6
+    lo, hi = _rango_cantidad(nombre)
+    demanda = POPULARIDAD.get(nombre, 0.05) * ventas_pico * (lo + hi) / 2
+    return stock_minimo + math.ceil(demanda * 1.3)
+
+
+# 4. VENTAS (incluye HOY, descuenta stock y repone al inicio de cada día)
+REPOSICION_UMBRAL = 0.6  # se repone cuando el stock cae bajo el 60 % del objetivo
+
 def generar_ventas(dias=30):
+    """
+    Simula `dias` días de operación. Cada mañana repone (ENTRADA real, suma stock
+    y queda en `movimientos`) los productos que están por debajo del umbral; así
+    el stock no se agota y todos los días tienen ventas.
+    """
     hoy = date.today()
 
     with _conn() as conn:
         conn.execute("PRAGMA foreign_keys = ON")
         cur = conn.cursor()
 
-        # Cargar productos con stock
-        cur.execute("SELECT id, nombre, precio, stock_actual FROM productos")
+        cur.execute("SELECT id, nombre, precio, stock_actual, stock_minimo FROM productos")
         prods = {
-            row[1]: {"id": row[0], "precio": row[2], "stock": row[3]}
+            row[1]: {"id": row[0], "precio": row[2], "stock": row[3], "minimo": row[4]}
             for row in cur.fetchall()
         }
 
@@ -140,11 +162,28 @@ def generar_ventas(dias=30):
 
         total_ventas = 0
         total_ingresos = 0.0
+        total_entradas = 0
 
         # range(dias-1, -1, -1) incluye hoy y da exactamente `dias` días
         for i in range(dias - 1, -1, -1):
             fecha = hoy - timedelta(days=i)
             factor = _factor_dia(fecha)
+
+            # --- Reposición de la mañana (entrada real de inventario) ---
+            for nombre, info in prods.items():
+                objetivo = _stock_objetivo(nombre, info["minimo"])
+                if info["stock"] < objetivo * REPOSICION_UMBRAL:
+                    cur.execute(
+                        "UPDATE productos SET stock_actual = ? WHERE id = ?",
+                        (objetivo, info["id"])
+                    )
+                    cur.execute("""
+                        INSERT INTO movimientos (fecha, producto_id, tipo, cantidad, motivo)
+                        VALUES (?, ?, 'ENTRADA', ?, ?)
+                    """, (fecha.isoformat(), info["id"], objetivo - info["stock"],
+                          random.choice(MOTIVOS_ENTRADA)))
+                    info["stock"] = objetivo
+                    total_entradas += 1
 
             # Menos ventas si es hoy (día no terminado)
             if i == 0:
@@ -179,7 +218,7 @@ def generar_ventas(dias=30):
                 """, (fecha.isoformat(), hora, info["id"], cantidad, total,
                       random.choice(["admin", "vendedor1", "vendedor2"])))
 
-                # Descontar stock (respeta CHECK >= 0)
+                # Descontar stock (nunca queda negativo: cantidad <= stock)
                 cur.execute("""
                     UPDATE productos SET stock_actual = stock_actual - ?
                     WHERE id = ?
@@ -192,12 +231,16 @@ def generar_ventas(dias=30):
         conn.commit()
 
     print(f"✅ {total_ventas} ventas generadas ({dias} días, incluye hoy)")
+    print(f"📦 {total_entradas} reposiciones de inventario registradas")
     print(f"💰 Ingresos totales: S/ {total_ingresos:,.2f}")
     return total_ventas
 
-# 5. MOVIMIENTOS DE INVENTARIO
+# 5. MERMAS Y AJUSTES DE INVENTARIO
 def generar_movimientos(dias=30):
-    """Registra entradas y ajustes de inventario."""
+    """
+    Registra ajustes (mermas) que sí descuentan stock. Las ENTRADAS de inventario
+    ya se registran en generar_ventas(), donde suman stock de verdad.
+    """
     hoy = date.today()
 
     with _conn() as conn:
@@ -213,19 +256,17 @@ def generar_movimientos(dias=30):
         for i in range(dias - 1, -1, -1):
             fecha = hoy - timedelta(days=i)
 
-            for _ in range(random.randint(1, 2)):
-                prod_id = random.choice(prods)[0]
-                cantidad = random.randint(20, 60)
-                cur.execute("""
-                    INSERT INTO movimientos (fecha, producto_id, tipo, cantidad, motivo)
-                    VALUES (?, ?, 'ENTRADA', ?, ?)
-                """, (fecha.isoformat(), prod_id, cantidad,
-                      random.choice(MOTIVOS_ENTRADA)))
-                total += 1
-
             if random.random() < 0.3:
                 prod_id = random.choice(prods)[0]
-                cantidad = random.randint(1, 5)
+                cur.execute("SELECT stock_actual FROM productos WHERE id = ?", (prod_id,))
+                stock = cur.fetchone()[0]
+                cantidad = min(random.randint(1, 5), stock)
+                if cantidad <= 0:
+                    continue
+                cur.execute("""
+                    UPDATE productos SET stock_actual = stock_actual - ?
+                    WHERE id = ?
+                """, (cantidad, prod_id))
                 cur.execute("""
                     INSERT INTO movimientos (fecha, producto_id, tipo, cantidad, motivo)
                     VALUES (?, ?, 'AJUSTE', ?, ?)
@@ -235,7 +276,7 @@ def generar_movimientos(dias=30):
 
         conn.commit()
 
-    print(f"✅ {total} movimientos de inventario generados")
+    print(f"✅ {total} ajustes de inventario (mermas) generados")
     return total
 
 # 6. FORZAR STOCK CRÍTICO
@@ -308,7 +349,7 @@ def poblar_todo(dias=30, limpiar=True, borrar_productos=False):
     # 4. Generar ventas
     generar_ventas(dias=dias)
 
-    # 5. Generar movimientos
+    # 5. Mermas / ajustes (las entradas ya se generaron con las ventas)
     generar_movimientos(dias=dias)
 
     # 6. Forzar stock crítico
