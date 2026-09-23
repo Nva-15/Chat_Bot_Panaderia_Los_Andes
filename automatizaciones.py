@@ -1,11 +1,3 @@
-"""
-Automatizaciones con IA generativa.
-Cada función:
-1. Consulta datos en la BD.
-2. Construye el prompt (usa prompts.py).
-3. Llama a Groq.
-4. Guarda el resultado y/o genera notificación.
-"""
 from datetime import date, datetime, timedelta
 from chatbot import consultar_groq
 from prompts import PROMPTS, NORMA_MONEDA
@@ -25,18 +17,15 @@ os.makedirs(LOGS_DIR, exist_ok=True)
 
 
 def _log(mensaje):
-    """Registra en un archivo de log."""
     with open(f"{LOGS_DIR}/automatizaciones.log", "a", encoding="utf-8") as f:
         f.write(f"[{datetime.now().isoformat()}] {mensaje}\n")
 
 
 def _inicio_semana():
-    """ISO date del lunes de la semana actual."""
     return (date.today() - timedelta(days=date.today().weekday())).isoformat()
 
 
 def _ya_procesado(tipo, desde_iso):
-    """Verifica si ya existe un reporte de ese tipo para el periodo dado."""
     with sqlite3.connect(DB_PATH) as conn:
         cur = conn.execute(
             "SELECT COUNT(*) FROM reportes_ia WHERE tipo = ? AND fecha_generacion >= ?",
@@ -46,7 +35,6 @@ def _ya_procesado(tipo, desde_iso):
 
 
 def _guardar_archivo(nombre, contenido):
-    """Guarda el reporte como archivo Markdown."""
     ruta = f"{REPORTES_DIR}/{nombre}.md"
     with open(ruta, "w", encoding="utf-8") as f:
         f.write(contenido)
@@ -54,7 +42,6 @@ def _guardar_archivo(nombre, contenido):
 
 
 def _generar(prompt_key, **kwargs):
-    """Helper: ejecuta un prompt y devuelve el texto generado."""
     config = PROMPTS[prompt_key]
     prompt_usuario = config["usuario"].format(**kwargs)
     return consultar_groq(
@@ -66,12 +53,8 @@ def _generar(prompt_key, **kwargs):
         max_tokens=config["max_tokens"]
     )
 
-
-# ============================================================
-# AUTOMATIZACIÓN 1: REPORTE DIARIO DE VENTAS (programado 20:00)
-# ============================================================
+# AUTO=====MATIZACIÓN 1: REPORTE DIARIO DE VENTAS (programado 20:00)
 def auto_reporte_diario():
-    """Genera y guarda el reporte diario de ventas."""
     _log("▶️ Ejecutando auto_reporte_diario")
     hoy = date.today().isoformat()
     if _ya_procesado("diario", hoy):
@@ -94,12 +77,8 @@ def auto_reporte_diario():
     _log(f"✅ Reporte diario guardado en {archivo}")
     return reporte
 
-
-# ============================================================
 # AUTOMATIZACIÓN 2: RESUMEN SEMANAL (programado lunes 09:00)
-# ============================================================
 def auto_resumen_semanal():
-    """Genera el resumen semanal gerencial."""
     _log("▶️ Ejecutando auto_resumen_semanal")
     inicio_semana = _inicio_semana()
     if _ya_procesado("semanal", inicio_semana):
@@ -122,12 +101,9 @@ def auto_resumen_semanal():
     return reporte
 
 
-# ============================================================
 # AUTOMATIZACIÓN 3: ALERTA DE STOCK CRÍTICO (cada 2 horas)
 # Sin dedup: debe re-evaluar el stock en cada corrida.
-# ============================================================
 def auto_alerta_stock():
-    """Detecta stock crítico y genera notificación."""
     _log("▶️ Ejecutando auto_alerta_stock")
     stock = obtener_stock()
     criticos = stock[stock["stock_actual"] <= stock["stock_minimo"]]
@@ -147,11 +123,8 @@ def auto_alerta_stock():
     return alerta
 
 
-# ============================================================
 # AUTOMATIZACIÓN 4: SUGERENCIA DE PEDIDO (diario 07:00)
-# ============================================================
 def auto_sugerir_pedido():
-    """Sugiere pedido a proveedores."""
     _log("▶️ Ejecutando auto_sugerir_pedido")
     hoy = date.today().isoformat()
     if _ya_procesado("pedido_proveedor", hoy):
@@ -169,12 +142,8 @@ def auto_sugerir_pedido():
     _log("✅ Sugerencia de pedido generada")
     return sugerencia
 
-
-# ============================================================
 # AUTOMATIZACIÓN 5: PREDICCIÓN DE DEMANDA (diario 06:00)
-# ============================================================
 def auto_prediccion_demanda():
-    """Predice demanda de los próximos 3 días."""
     _log("▶️ Ejecutando auto_prediccion_demanda")
     hoy = date.today().isoformat()
     if _ya_procesado("prediccion", hoy):
@@ -193,18 +162,15 @@ def auto_prediccion_demanda():
     return prediccion
 
 
-# ============================================================
 # AUTOMATIZACIÓN 6: ANÁLISIS DE HORAS PICO (domingo 22:00)
-# ============================================================
 def auto_horas_pico():
-    """Analiza horas de mayor/menor afluencia."""
     _log("▶️ Ejecutando auto_horas_pico")
     hoy = date.today().isoformat()
     if _ya_procesado("horas_pico", hoy):
         _log(f"⏭️ Análisis de horas pico de {hoy} ya fue procesado, se omite")
         return None
 
-    ventas = obtener_ventas_dia()  # ajustar a rango semanal si se desea
+    ventas = obtener_ventas_dia() 
     if ventas.empty:
         return None
     analisis = _generar("P05_horas_pico", datos=ventas.to_csv(index=False))
@@ -212,12 +178,8 @@ def auto_horas_pico():
     _log("✅ Análisis de horas pico generado")
     return analisis
 
-
-# ============================================================
 # AUTOMATIZACIÓN 7: ANÁLISIS DE RENTABILIDAD (semanal)
-# ============================================================
 def auto_rentabilidad():
-    """Analiza márgenes de ganancia por producto."""
     _log("▶️ Ejecutando auto_rentabilidad")
     inicio_semana = _inicio_semana()
     if _ya_procesado("rentabilidad", inicio_semana):

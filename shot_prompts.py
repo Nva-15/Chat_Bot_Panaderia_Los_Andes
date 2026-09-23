@@ -1,4 +1,3 @@
-"""Banco de prompts Zero-Shot, One-Shot y Few-Shot con los mismos datos y pregunta."""
 from prompts import NORMA_MONEDA, REGLAS_COMUNES
 
 DATOS_VENTAS_PRUEBA = """producto,cantidad,total

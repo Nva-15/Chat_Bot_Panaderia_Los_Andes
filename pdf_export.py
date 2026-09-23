@@ -1,4 +1,3 @@
-"""Genera reportes en PDF descargables desde Streamlit."""
 import re
 from datetime import datetime
 from fpdf import FPDF
@@ -32,7 +31,6 @@ class ReportePDF(FPDF):
 
 
 def _escribir_parrafos(pdf, contenido, alto=6):
-    # fpdf2 solo soporta latin-1, se descartan emojis
     texto = contenido.encode("latin-1", "ignore").decode("latin-1")
     for parrafo in texto.split("\n"):
         if parrafo.strip():
@@ -67,7 +65,6 @@ def _escribir_tabla(pdf, tabla_datos, titulo="Datos"):
                 fila.cell(str(valor))
     pdf.ln(4)
 
-
 def _escribir_contenido_ia(pdf, contenido, alto=6):
     """Escribe texto de la IA, detectando y dibujando tablas markdown como tablas reales."""
     texto = contenido.encode("latin-1", "ignore").decode("latin-1")
@@ -92,7 +89,6 @@ def _escribir_contenido_ia(pdf, contenido, alto=6):
             pdf.ln(alto / 2)
             i += 1
 
-
 def generar_pdf_reporte(titulo, contenido, tabla_datos=None, nota_datos_ficticios=True):
     """Convierte un reporte de texto (y opcionalmente una tabla) en PDF."""
     pdf = ReportePDF()
@@ -113,7 +109,6 @@ def generar_pdf_reporte(titulo, contenido, tabla_datos=None, nota_datos_ficticio
         pdf.multi_cell(0, 5, NOTA_DATOS_FICTICIOS, new_x=XPos.LMARGIN, new_y=YPos.NEXT)
 
     return bytes(pdf.output())
-
 
 def generar_pdf_comparacion(resultados, pregunta, datos):
     """Genera un PDF con las respuestas Zero/One/Few-Shot, una sección por técnica."""

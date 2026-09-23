@@ -1,7 +1,3 @@
-"""
-Programador de tareas automatizadas con APScheduler.
-Se inicia al arrancar Streamlit y corre en segundo plano.
-"""
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from apscheduler.triggers.interval import IntervalTrigger
@@ -19,7 +15,6 @@ from automatizaciones import (
 )
 
 scheduler = BackgroundScheduler(timezone="America/Lima")
-
 
 def iniciar_scheduler():
     """Registra y arranca todas las tareas programadas."""
@@ -94,7 +89,6 @@ def iniciar_scheduler():
     # Cierre limpio al salir
     atexit.register(lambda: scheduler.shutdown(wait=False))
 
-
 def listar_tareas():
     """Devuelve las tareas activas con su próxima ejecución."""
     return [
@@ -106,7 +100,6 @@ def listar_tareas():
         }
         for job in scheduler.get_jobs()
     ]
-
 
 def ejecutar_ahora(job_id):
     """Ejecuta una tarea manualmente y devuelve el resultado generado."""

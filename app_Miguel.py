@@ -1,17 +1,13 @@
 import streamlit as st
 
-# ============================================================
-# 🔑 PASO 1: set_page_config DEBE ser la primera llamada a Streamlit
-# ============================================================
+# PASO 1: set_page_config DEBE ser la primera llamada a Streamlit
 st.set_page_config(
     page_title="Panadería Los Andes",
     page_icon="🥖",
     layout="wide"
 )
 
-# ============================================================
-# 🔑 PASO 2: Resto de imports
-# ============================================================
+# PASO 2: Resto de imports
 from datetime import date, datetime, timedelta
 import pandas as pd
 
@@ -28,15 +24,12 @@ from database import (
     marcar_notificacion_leida, limpiar_notificaciones_leidas, obtener_ultimo_reporte
 )
 
-# ============================================================
-# 🔑 PASO 3: Inicialización del entorno (BD + datos + ventas de hoy)
+# PASO 3: Inicialización del entorno (BD + datos + ventas de hoy)
 # Se ejecuta una sola vez por sesión de servidor gracias a @st.cache_resource
-# ============================================================
+
 inicializar_entorno()
 
-# ============================================================
-# 🔑 PASO 4: Iniciar scheduler (una vez por sesión del navegador)
-# ============================================================
+# PASO 4: Iniciar scheduler (una vez por sesión del navegador)
 if "scheduler_iniciado" not in st.session_state:
     try:
         iniciar_scheduler()
@@ -44,17 +37,13 @@ if "scheduler_iniciado" not in st.session_state:
         print(f"Scheduler ya iniciado: {e}")
     st.session_state.scheduler_iniciado = True
 
-# ============================================================
-# 🔑 PASO 5: Estado inicial de la sesión
-# ============================================================
+# PASO 5: Estado inicial de la sesión
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "role" not in st.session_state:
     st.session_state.role = None
 
-# ============================================================
 # LOGIN
-# ============================================================
 if st.session_state.role is None:
     st.title("🥖 Panadería Los Andes")
     st.subheader("Acceso interno")
@@ -68,9 +57,7 @@ if st.session_state.role is None:
             st.rerun()
     st.stop()
 
-# ============================================================
 # SIDEBAR
-# ============================================================
 with st.sidebar:
     st.title("🥖 Los Andes")
     st.write(f"👤 **{st.session_state.usuario}**")
@@ -84,7 +71,7 @@ with st.sidebar:
     if "menu_opcion" not in st.session_state:
         st.session_state.menu_opcion = MENU_OPCIONES[0]
 
-    # 🔔 Notificaciones pendientes
+    # Notificaciones pendientes
     pendientes = obtener_notificaciones_no_leidas()
     if not pendientes.empty:
         if st.button(
@@ -101,9 +88,7 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# ============================================================
 # CHATBOT
-# ============================================================
 if opcion == "💬 Chatbot":
     st.header("🤖 Pandito AI")
     for msg in st.session_state.messages:
@@ -176,9 +161,7 @@ if opcion == "💬 Chatbot":
                 {"role": "assistant", "content": respuesta}
             )
 
-# ============================================================
 # REPORTES IA (manuales)
-# ============================================================
 elif opcion == "📊 Reportes IA":
     st.header("📊 Reportes Generados por IA")
     st.caption("Estos reportes también se generan automáticamente según el cronograma.")
@@ -270,9 +253,7 @@ elif opcion == "📊 Reportes IA":
             mime="application/pdf"
         )
 
-# ============================================================
 # ZERO / ONE / FEW-SHOT
-# ============================================================
 elif opcion == "🧪 Zero/One/Few-Shot":
     st.header("🧪 Comparación de técnicas de prompting")
     st.caption(
@@ -314,9 +295,7 @@ elif opcion == "🧪 Zero/One/Few-Shot":
         )
         st.caption("Cada respuesta también queda guardada como evidencia en la carpeta `pruebas/`.")
 
-# ============================================================
 # INVENTARIO
-# ============================================================
 elif opcion == "📦 Inventario":
     st.header("📦 Inventario Actual")
 
@@ -358,9 +337,7 @@ elif opcion == "📦 Inventario":
             f"(S/ {v['total']:.2f})"
         )
 
-# ============================================================
 # AUTOMATIZACIONES
-# ============================================================
 elif opcion == "⚙️ Automatizaciones":
     st.header("⚙️ Panel de Automatizaciones")
     st.caption("Tareas programadas que se ejecutan sin intervención manual.")
@@ -435,9 +412,7 @@ elif opcion == "⚙️ Automatizaciones":
                     key=f"pdf_{r['job_id']}"
                 )
 
-# ============================================================
 # NOTIFICACIONES
-# ============================================================
 elif opcion == "🔔 Notificaciones":
     st.header("🔔 Notificaciones del Sistema")
 
@@ -457,9 +432,7 @@ elif opcion == "🔔 Notificaciones":
                     marcar_notificacion_leida(n["id"])
                     st.rerun()
 
-# ============================================================
 # AYUDA
-# ============================================================
 elif opcion == "ℹ️ Ayuda":
     st.header("ℹ️ Ayuda")
     st.markdown("""

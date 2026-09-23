@@ -1,4 +1,3 @@
-"""Ejecuta y guarda evidencia de la comparación Zero-Shot / One-Shot / Few-Shot."""
 import os
 from datetime import datetime
 from chatbot import consultar_groq
@@ -10,7 +9,6 @@ os.makedirs(PRUEBAS_DIR, exist_ok=True)
 TEMPERATURE = 0.3
 MAX_TOKENS = 400
 
-
 def _guardar_evidencia(clave, nombre, respuesta):
     ts = datetime.now().strftime("%Y-%m-%d_%H%M%S")
     ruta = f"{PRUEBAS_DIR}/{clave}_{ts}.md"
@@ -20,7 +18,6 @@ def _guardar_evidencia(clave, nombre, respuesta):
         f.write(f"**Datos:**\n```\n{DATOS_VENTAS_PRUEBA}\n```\n\n")
         f.write(f"**Respuesta de Groq:**\n\n{respuesta}\n")
     return ruta
-
 
 def ejecutar_tecnica(clave):
     """Ejecuta una sola técnica (zero_shot/one_shot/few_shot) contra Groq."""
@@ -35,7 +32,6 @@ def ejecutar_tecnica(clave):
     )
     _guardar_evidencia(clave, cfg["nombre"], respuesta)
     return respuesta
-
 
 def ejecutar_comparacion():
     """Ejecuta las 3 técnicas con los mismos datos y pregunta."""

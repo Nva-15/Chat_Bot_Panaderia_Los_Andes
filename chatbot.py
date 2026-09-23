@@ -1,22 +1,8 @@
-"""
-Cliente de Groq para Pandito AI.
-- En Streamlit Cloud lee la API Key desde st.secrets.
-- En local la lee desde .env.
-- Crea el cliente bajo demanda para evitar errores al importar.
-"""
 import os
 from groq import Groq
 
-
-# ============================================================
 # OBTENCIÓN DE API KEY (con fallback)
-# ============================================================
 def _obtener_api_key():
-    """
-    Busca la API Key en este orden:
-      1. st.secrets (Streamlit Cloud)
-      2. Variables de entorno / .env (local)
-    """
     # 1. Streamlit Cloud
     try:
         import streamlit as st
@@ -35,10 +21,7 @@ def _obtener_api_key():
 
     return os.environ.get("GROQ_API_KEY", "")
 
-
-# ============================================================
 # CLIENTE GROQ (lazy singleton)
-# ============================================================
 _client = None
 
 
@@ -56,10 +39,7 @@ def _get_client():
         _client = Groq(api_key=api_key)
     return _client
 
-
-# ============================================================
 # CONSULTA A GROQ
-# ============================================================
 def consultar_groq(messages, temperature=0.3, max_tokens=1024):
     """Envía mensajes a Groq usando openai/gpt-oss-120b."""
     try:
@@ -84,10 +64,7 @@ def chat_con_contexto(prompt_sistema, historial, pregunta_usuario,
     mensajes.append({"role": "user", "content": pregunta_usuario})
     return consultar_groq(mensajes, temperature, max_tokens)
 
-
-# ============================================================
 # DIAGNÓSTICO
-# ============================================================
 def api_key_configurada():
     """Devuelve True si hay una API Key disponible."""
     try:

@@ -1,7 +1,3 @@
-"""
-Sistema de notificaciones para mostrar en Streamlit.
-Soporta notificaciones en pantalla, y opcionalmente correo/Telegram.
-"""
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart

@@ -1,22 +1,11 @@
-"""
-Banco de 20 prompts para Pandito AI - Panadería Los Andes.
-
-Alineado con el documento 'Banco_Prompts_Reporte_Final.docx'.
-Estructura: Rol (Pandito AI) - Contexto - Tarea - Formato
-"""
-
-# ============================================================
 # NORMA COMÚN DE MONEDA
-# ============================================================
 NORMA_MONEDA = (
     "Trabajas para 'Panadería Los Andes', ubicada en Perú. Expresa todo monto "
     "en soles peruanos con el símbolo 'S/' y punto decimal (ej: S/ 125.50). "
     "Nunca uses $, USD, € u otro símbolo o país distinto."
 )
 
-# ============================================================
 # INSTRUCCIONES Y RESTRICCIONES COMUNES
-# ============================================================
 REGLAS_COMUNES = (
     "Utiliza únicamente la información proporcionada por el sistema. "
     "No inventes cantidades, fechas, precios, ventas o datos de inventario. "
@@ -317,10 +306,7 @@ PROMPTS = {
     },
 }
 
-
-# ============================================================
 # UTILIDADES
-# ============================================================
 def validar_prompts():
     """Verifica que todos los prompts tengan la estructura correcta."""
     errores = []
@@ -329,7 +315,6 @@ def validar_prompts():
             if campo not in cfg:
                 errores.append(f"{clave}: falta '{campo}'")
     return errores
-
 
 def listar_prompts():
     """Devuelve un resumen de los 20 prompts."""
@@ -342,7 +327,6 @@ def listar_prompts():
         }
         for clave, cfg in PROMPTS.items()
     ]
-
 
 if __name__ == "__main__":
     print(f"Total de prompts: {len(PROMPTS)}")

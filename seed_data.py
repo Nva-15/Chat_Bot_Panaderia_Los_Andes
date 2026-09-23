@@ -1,13 +1,3 @@
-"""
-Genera datos de prueba realistas para la Panadería Los Andes.
-
-- 30 días de ventas INCLUYENDO hoy.
-- Descuenta stock al generar cada venta (respeta CHECK >= 0).
-- Acepta parámetros `dias` y `limpiar` para ser invocado desde
-  inicializar_entorno.py.
-- No borra productos si ya existen (idempotente).
-- Devuelve un resumen del estado final.
-"""
 import sqlite3
 import random
 import sys
@@ -15,10 +5,7 @@ from datetime import date, timedelta
 
 DB_PATH = "panaderia.db"
 
-
-# ============================================================
 # 1. PRODUCTOS BASE (mismos que init_db.py)
-# ============================================================
 PRODUCTOS = [
     ("Pan francés",        0.50, 0.25, 120, 40),
     ("Pan integral",       0.75, 0.40,  25, 20),
@@ -56,16 +43,11 @@ HORARIOS = [
 MOTIVOS_ENTRADA = ["Reposición de proveedor", "Compra diaria", "Producción propia"]
 MOTIVOS_AJUSTE = ["Merma por vencimiento", "Producto dañado", "Ajuste por conteo"]
 
-
-# ============================================================
 # 2. UTILIDADES
-# ============================================================
 def _conn():
     return sqlite3.connect(DB_PATH)
 
-
 def _tablas_existen():
-    """Verifica si las tablas existen."""
     try:
         with _conn() as conn:
             cur = conn.execute(
@@ -76,12 +58,7 @@ def _tablas_existen():
     except Exception:
         return False
 
-
 def limpiar_tablas(borrar_productos=False):
-    """
-    Borra datos previos.
-    Por defecto NO borra productos (para no chocar con init_db.py).
-    """
     with _conn() as conn:
         conn.execute("DELETE FROM ventas")
         conn.execute("DELETE FROM movimientos")
@@ -92,9 +69,7 @@ def limpiar_tablas(borrar_productos=False):
         conn.commit()
     print(f"🧹 Tablas limpiadas (productos {'borrados' if borrar_productos else 'intactos'})")
 
-
 def insertar_productos():
-    """Inserta productos si no existen. Idempotente."""
     with _conn() as conn:
         cur = conn.cursor()
         cur.execute("SELECT COUNT(*) FROM productos")
@@ -116,31 +91,24 @@ def insertar_productos():
         print(f"✅ {total} productos en la BD")
         return total
 
-
-# ============================================================
 # 3. HELPERS DE ALEATORIEDAD
-# ============================================================
 def _peso_horario():
     horarios = [h for h, _ in HORARIOS]
     pesos = [p for _, p in HORARIOS]
     return random.choices(horarios, weights=pesos, k=1)[0]
-
 
 def _producto_aleatorio():
     productos = list(POPULARIDAD.keys())
     pesos = list(POPULARIDAD.values())
     return random.choices(productos, weights=pesos, k=1)[0]
 
-
 def _factor_dia(fecha):
-    """Fines de semana venden más. Lunes menos."""
     dia = fecha.weekday()
     if dia in (5, 6):
         return random.uniform(1.3, 1.6)
     if dia == 0:
         return random.uniform(0.7, 0.9)
     return random.uniform(0.9, 1.2)
-
 
 def _cantidad_para_producto(nombre):
     if nombre == "Pan francés":
@@ -151,15 +119,8 @@ def _cantidad_para_producto(nombre):
         return random.randint(1, 3)
     return random.randint(1, 8)
 
-
-# ============================================================
 # 4. VENTAS (incluye HOY, descuenta stock)
-# ============================================================
 def generar_ventas(dias=30):
-    """
-    Genera ventas realistas para los últimos `dias` días INCLUYENDO hoy.
-    Descuenta stock respetando el CHECK constraint >= 0.
-    """
     hoy = date.today()
 
     with _conn() as conn:
@@ -234,10 +195,7 @@ def generar_ventas(dias=30):
     print(f"💰 Ingresos totales: S/ {total_ingresos:,.2f}")
     return total_ventas
 
-
-# ============================================================
 # 5. MOVIMIENTOS DE INVENTARIO
-# ============================================================
 def generar_movimientos(dias=30):
     """Registra entradas y ajustes de inventario."""
     hoy = date.today()
@@ -280,10 +238,7 @@ def generar_movimientos(dias=30):
     print(f"✅ {total} movimientos de inventario generados")
     return total
 
-
-# ============================================================
 # 6. FORZAR STOCK CRÍTICO
-# ============================================================
 def forzar_stock_critico():
     """Reduce el stock de algunos productos para activar alertas."""
     criticos = {
@@ -323,10 +278,7 @@ def forzar_stock_critico():
 
     print(f"⚠️  {len(criticos)} productos en estado crítico")
 
-
-# ============================================================
 # 7. PIPELINE PRINCIPAL
-# ============================================================
 def poblar_todo(dias=30, limpiar=True, borrar_productos=False):
     """
     Ejecuta el pipeline de población.
@@ -374,7 +326,6 @@ def poblar_todo(dias=30, limpiar=True, borrar_productos=False):
 
 
 def _resumen_final():
-    """Devuelve un resumen textual del estado de la BD."""
     with _conn() as conn:
         cur = conn.cursor()
         cur.execute("SELECT COUNT(*) FROM productos")
@@ -406,9 +357,7 @@ def _resumen_final():
     )
 
 
-# ============================================================
 # 8. CLI
-# ============================================================
 if __name__ == "__main__":
     dias = 30
     limpiar = True

@@ -1,9 +1,3 @@
-"""
-Inicialización automática del entorno para Streamlit Cloud.
-Se ejecuta UNA SOLA VEZ por sesión de servidor con @st.cache_resource.
-
-No depende de inyectar_ventas_hoy.py: la lógica está integrada aquí.
-"""
 import os
 import sqlite3
 import random
@@ -19,10 +13,7 @@ HORARIOS = [
     "18:00", "18:30", "19:00"
 ]
 
-
-# ============================================================
 # VERIFICACIONES
-# ============================================================
 def _bd_existe():
     return os.path.exists(DB_PATH)
 
@@ -53,10 +44,7 @@ def _hay_ventas_hoy():
     except Exception:
         return False
 
-
-# ============================================================
 # INYECCIÓN DE VENTAS DEL DÍA (lógica integrada)
-# ============================================================
 def _inyectar_ventas_hoy(min_ventas=15):
     """
     Genera ventas aleatorias para hoy.
@@ -150,10 +138,7 @@ def _inyectar_ventas_hoy(min_ventas=15):
         print(f"[init] ✅ {inyectadas} ventas inyectadas para {hoy}")
         return inyectadas
 
-
-# ============================================================
 # INICIALIZACIÓN PRINCIPAL
-# ============================================================
 @st.cache_resource(show_spinner="🚀 Inicializando sistema...")
 def inicializar_entorno():
     """
