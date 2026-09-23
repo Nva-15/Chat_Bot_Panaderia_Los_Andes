@@ -17,7 +17,9 @@ from automatizaciones import (
 scheduler = BackgroundScheduler(timezone="America/Lima")
 
 def iniciar_scheduler():
-    """Registra y arranca todas las tareas programadas."""
+    """Registra y arranca todas las tareas programadas (idempotente)."""
+    if scheduler.running:
+        return
 
     # 1. Reporte diario a las 20:00
     scheduler.add_job(

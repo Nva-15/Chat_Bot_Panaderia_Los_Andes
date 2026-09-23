@@ -29,13 +29,18 @@ from database import (
 
 inicializar_entorno()
 
-# PASO 4: Iniciar scheduler (una vez por sesión del navegador)
-if "scheduler_iniciado" not in st.session_state:
-    try:
-        iniciar_scheduler()
-    except Exception as e:
-        print(f"Scheduler ya iniciado: {e}")
-    st.session_state.scheduler_iniciado = True
+# PASO 4: Iniciar scheduler (una sola vez por proceso del servidor)
+# @st.cache_resource comparte el resultado entre todas las sesiones del
+# navegador, así no se registran los trabajos varias veces.
+@st.cache_resource(show_spinner=False)
+def _arrancar_scheduler():
+    iniciar_scheduler()
+    return True
+
+try:
+    _arrancar_scheduler()
+except Exception as e:
+    st.warning(f"No se pudo iniciar el scheduler: {e}")
 
 # PASO 5: Estado inicial de la sesión
 if "messages" not in st.session_state:

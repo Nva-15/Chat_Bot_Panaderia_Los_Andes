@@ -91,7 +91,7 @@ def auto_resumen_semanal():
         return None
 
     reporte = _generar(
-        "P14_resumen_semanal",
+        "P14_reporte_semanal",
         datos=ventas.to_csv(index=False)
     )
 
@@ -135,7 +135,7 @@ def auto_sugerir_pedido():
     consumo = obtener_consumo_promedio(dias=7)
     datos = stock.merge(consumo, on="producto", how="left").fillna(0)
 
-    sugerencia = _generar("P09_pedido_proveedores",
+    sugerencia = _generar("P09_sugerencia_abastecimiento",
                           datos=datos.to_csv(index=False))
     guardar_reporte("pedido_proveedor", sugerencia)
     guardar_notificacion("pedido_proveedor", "MEDIA", sugerencia)
@@ -155,7 +155,7 @@ def auto_prediccion_demanda():
         _log("⚠️ Datos insuficientes para predicción")
         return None
 
-    prediccion = _generar("P08_prediccion_demanda",
+    prediccion = _generar("P16_identificacion_patrones",
                           datos=ventas.to_csv(index=False))
     guardar_reporte("prediccion", prediccion)
     _log("✅ Predicción de demanda generada")
@@ -173,7 +173,7 @@ def auto_horas_pico():
     ventas = obtener_ventas_dia() 
     if ventas.empty:
         return None
-    analisis = _generar("P05_horas_pico", datos=ventas.to_csv(index=False))
+    analisis = _generar("P05_horarios_movimiento", datos=ventas.to_csv(index=False))
     guardar_reporte("horas_pico", analisis)
     _log("✅ Análisis de horas pico generado")
     return analisis
@@ -194,7 +194,7 @@ def auto_rentabilidad():
             "SELECT nombre AS producto, precio, costo FROM productos", conn
         )
     df["margen"] = df["precio"] - df["costo"]
-    analisis = _generar("P13_rentabilidad", datos=df.to_csv(index=False))
+    analisis = _generar("P13_analisis_rentabilidad", datos=df.to_csv(index=False))
     guardar_reporte("rentabilidad", analisis)
     _log("✅ Análisis de rentabilidad generado")
     return analisis
