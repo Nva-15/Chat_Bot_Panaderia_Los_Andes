@@ -1,0 +1,381 @@
+[2026-09-21T16:12:54.919988] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T16:12:54.922920] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T16:12:57.518692] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T16:12:57.524862] ⚠️ Sin datos semanales
+[2026-09-21T16:12:59.062562] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T16:12:59.069925] ✅ Stock OK, sin alertas
+[2026-09-21T16:13:32.927584] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T16:13:32.934501] ✅ Stock OK, sin alertas
+[2026-09-21T16:13:40.106791] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T16:13:40.109620] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T16:14:04.609855] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T16:14:04.614189] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T16:18:12.403605] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T16:18:12.406056] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T16:18:22.711851] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T16:18:24.531407] ⚠️ 4 productos críticos detectados
+[2026-09-21T16:19:00.356700] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T16:19:00.360301] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T16:19:03.829918] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-21T16:19:05.471510] ✅ Predicción de demanda generada
+[2026-09-21T16:19:10.468812] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-21T16:19:12.134496] ✅ Sugerencia de pedido generada
+[2026-09-21T16:20:21.086100] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T16:20:21.088627] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T16:20:22.441859] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T16:20:23.900631] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T16:20:24.349696] ✅ Resumen semanal guardado en reportes/semanal_2026-09-21.md
+[2026-09-21T16:20:25.445188] ⚠️ 4 productos críticos detectados
+[2026-09-21T16:20:29.070107] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T16:20:30.977388] ✅ Resumen semanal guardado en reportes/semanal_2026-09-21.md
+[2026-09-21T23:05:42.790751] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T23:05:42.797303] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T23:05:44.323454] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:05:46.365920] ✅ Resumen semanal guardado en reportes/semanal_2026-09-21.md
+[2026-09-21T23:33:19.274354] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:33:19.274947] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-21T23:36:53.906046] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:36:53.907131] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-21T23:37:03.815184] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T23:37:03.817726] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T23:37:05.235250] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:37:05.236330] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-21T23:37:14.887994] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:37:16.437040] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:37:18.960438] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:37:18.962327] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-21T23:38:26.791253] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:38:26.795508] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-21T23:38:34.381725] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:38:35.992952] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:38:54.382614] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:38:54.383695] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-21T23:38:56.922886] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:38:58.558591] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:40:45.580181] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:40:47.127208] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:40:51.243368] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:40:51.245880] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-21T23:45:59.266685] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:46:00.811832] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:47:02.176138] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:47:03.710618] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:47:35.283375] ▶️ Ejecutando auto_reporte_diario
+[2026-09-21T23:47:35.290040] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-21T23:47:37.296253] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-21T23:47:37.298256] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-21T23:47:49.285197] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:47:50.832095] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:47:57.664606] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:47:59.301955] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:48:59.524993] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:49:01.102606] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:49:03.058750] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:49:04.490442] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:59:48.096998] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:59:49.741423] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:59:52.039508] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:59:53.337744] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:59:53.466346] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:59:54.910353] ⚠️ 4 productos críticos detectados
+[2026-09-21T23:59:57.968223] ▶️ Ejecutando auto_alerta_stock
+[2026-09-21T23:59:59.444549] ⚠️ 4 productos críticos detectados
+[2026-09-22T00:00:25.876784] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T00:00:28.016538] ✅ Resumen semanal guardado en reportes/semanal_2026-09-22.md
+[2026-09-22T00:02:04.413685] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T00:02:05.948704] ⚠️ 4 productos críticos detectados
+[2026-09-22T00:03:03.965991] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T00:03:05.507555] ✅ Predicción de demanda generada
+[2026-09-22T00:06:00.863394] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T00:06:02.578683] ⚠️ 4 productos críticos detectados
+[2026-09-22T00:10:57.639912] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T00:10:57.641857] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T00:11:03.492798] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T00:11:05.123472] ⚠️ 4 productos críticos detectados
+[2026-09-22T00:11:12.564397] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T00:11:12.567963] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T00:11:14.355750] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T00:11:14.359051] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:48:08.022496] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:48:08.026413] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:48:10.671437] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:48:10.674217] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:48:12.292987] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:48:12.298673] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:48:13.779217] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T22:48:15.043515] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T22:48:17.140449] ✅ Resumen semanal guardado en reportes/semanal_2026-09-22.md
+[2026-09-22T22:48:19.394420] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T22:48:20.141832] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T22:48:20.325221] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T22:48:23.500140] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T22:48:24.419453] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T22:48:24.968737] ✅ Análisis de rentabilidad generado
+[2026-09-22T22:48:26.063367] ✅ Análisis de rentabilidad generado
+[2026-09-22T22:48:31.726033] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T22:48:36.535795] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T22:48:36.540131] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T22:48:39.642876] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:48:39.649529] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:48:41.857397] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T22:48:41.859823] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T22:50:18.980243] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:50:18.985918] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:29.681319] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:29.687335] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:32.302666] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:32.307677] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:33.278757] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T22:57:33.281330] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T22:57:34.197268] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T22:57:34.200470] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T22:57:35.384524] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T22:57:36.064690] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T22:57:36.803640] ⚠️ 4 productos críticos detectados
+[2026-09-22T22:57:37.514907] ⚠️ 4 productos críticos detectados
+[2026-09-22T22:57:38.585121] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:38.590881] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:39.789626] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:39.793227] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:40.374577] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:40.378750] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:40.581945] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:40.586353] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:40.763714] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:40.768373] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:40.936483] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:40.942262] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:41.108881] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:41.114204] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:57:41.298484] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:57:41.300264] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-22T22:58:12.986104] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:58:14.214358] ✅ Reporte diario guardado en reportes/diario_2026-09-22.md
+[2026-09-22T22:58:39.288220] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T22:58:39.290584] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T22:58:40.671495] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T22:58:42.045340] ⚠️ 5 productos críticos detectados
+[2026-09-22T22:58:43.815955] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T22:58:43.817761] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:22.637239] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:00:24.428397] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:00:26.544448] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:00:27.836179] ✅ Predicción de demanda generada
+[2026-09-22T23:00:30.585214] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:00:32.029874] ✅ Sugerencia de pedido generada
+[2026-09-22T23:00:33.397955] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:00:33.399572] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:36.433033] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:00:36.435953] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:36.886850] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:00:36.889178] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:37.067159] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:00:37.068078] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:37.253896] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:00:37.255556] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:37.427539] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:00:37.428515] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:37.622442] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:00:37.626001] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:38.273228] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:00:38.817140] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:00:39.010173] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:00:39.439756] ✅ Análisis de horas pico generado
+[2026-09-22T23:00:39.854075] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:00:39.855191] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:00:40.044393] ✅ Análisis de horas pico generado
+[2026-09-22T23:00:40.188461] ✅ Análisis de horas pico generado
+[2026-09-22T23:00:41.002597] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:00:41.004038] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:00:43.346960] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:00:43.349396] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:00:43.542275] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:00:43.544241] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:00:43.715051] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:00:43.716120] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:00:43.917252] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:00:43.919849] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:00:44.095858] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:00:44.097317] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:00:45.705050] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:00:45.706163] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:00:47.331937] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:00:47.333252] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:00:47.976436] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:00:47.977725] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:00:48.909710] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:00:48.911015] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:00:50.235881] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:00:50.237165] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:00:51.289870] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T23:00:51.292578] ⏭️ Análisis de rentabilidad desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:07:21.953385] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:07:21.956454] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:07:24.164191] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:07:24.165757] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:07:25.651513] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:07:27.323757] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:09:04.646893] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:09:04.650583] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:09:23.672771] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:09:23.674672] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:09:37.383708] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:09:37.386952] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:14:09.918515] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:14:09.922949] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:14:12.084724] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:14:12.086130] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:15:19.950905] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:15:21.390438] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:15:23.080480] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:15:23.083468] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:15:24.999953] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:15:25.002270] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:15:26.740525] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:15:26.744416] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:15:27.917931] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:15:27.920774] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:15:28.738971] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:15:28.743059] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:15:29.748027] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:15:29.751191] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:15:30.451560] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T23:15:30.454137] ⏭️ Análisis de rentabilidad desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:15:34.289907] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:15:35.910337] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:15:37.147787] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:15:37.151003] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:15:38.472728] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:15:38.474044] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:15:39.217372] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:15:39.220695] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:15:39.508095] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:15:39.510833] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:15:52.348841] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:15:54.035311] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:15:59.388551] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:15:59.390917] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:16:06.798473] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:16:08.410932] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:16:12.777551] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:16:14.034995] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:16:15.438238] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:16:16.939530] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:24:40.285463] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:24:41.883834] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:24:46.772687] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:24:46.775677] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:25:55.248444] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:25:56.834080] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:26:18.086404] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:26:18.088856] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:26:20.778462] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:26:20.781125] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:26:22.580415] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:26:22.582789] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:26:27.735009] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:26:27.738357] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:26:30.003412] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:26:30.004752] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:26:35.372954] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:26:35.375334] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:26:36.693969] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:26:36.695386] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:26:38.519643] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T23:26:38.522187] ⏭️ Análisis de rentabilidad desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:26:49.192589] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:26:50.732716] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:29:49.151867] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:29:51.521797] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:30:59.399571] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:31:01.253895] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:31:54.167737] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:31:56.089023] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:31:58.003123] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:31:58.005166] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:32:01.542854] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:32:01.546172] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:32:04.334456] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:32:04.336207] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:32:05.405505] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:32:05.407451] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:32:08.104971] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:32:08.108367] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:32:10.131335] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:32:10.133778] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:32:12.279228] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:32:12.281240] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:32:14.695618] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:32:14.697444] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:32:20.585430] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:32:20.588263] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:32:22.146487] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T23:32:22.149574] ⏭️ Análisis de rentabilidad desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:32:24.088147] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:32:25.987590] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:32:38.933878] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:32:38.935902] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:33:07.384121] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:33:09.317807] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:37:36.810942] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:37:36.811474] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:37:36.812018] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:37:39.104644] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:38:35.714208] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:38:37.703407] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:38:40.952431] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:38:40.955083] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:38:54.864959] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:38:54.867955] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:38:58.421837] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:38:58.424254] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:39:16.765438] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T23:39:16.769010] ⏭️ Análisis de rentabilidad desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:39:25.843989] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:39:25.846323] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:39:33.538023] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:39:33.540497] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:39:37.740758] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:39:37.744018] ⏭️ Análisis de horas pico de 2026-09-22 ya fue procesado, se omite
+[2026-09-22T23:39:38.584025] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:39:38.586516] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:39:53.865840] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:39:53.868802] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:39:54.992024] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:39:54.994463] ⏭️ Corte 2026-09-22 ya fue procesado, se omite (no se llama a Groq)
+[2026-09-22T23:39:58.027826] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:39:58.030229] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:40:02.471007] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:40:02.472992] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:46:19.750930] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-22T23:46:22.187386] ✅ Resumen semanal guardado en reportes/semanal_2026-09-22.md
+[2026-09-22T23:46:22.187595] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T23:46:23.907204] ✅ Análisis de rentabilidad generado
+[2026-09-22T23:47:24.281005] ▶️ Ejecutando auto_alerta_stock
+[2026-09-22T23:47:26.455653] ⚠️ 5 productos críticos detectados
+[2026-09-22T23:47:42.013231] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:47:42.016087] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:48:03.247938] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:48:03.249599] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:48:08.919941] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:48:08.924604] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:48:13.891560] ▶️ Ejecutando auto_sugerir_pedido
+[2026-09-22T23:48:13.892943] ⏭️ Sugerencia de pedido de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:48:24.257847] ▶️ Ejecutando auto_reporte_diario
+[2026-09-22T23:48:25.272896] ✅ Reporte diario guardado en reportes/diario_2026-09-22.md
+[2026-09-22T23:48:37.702672] ▶️ Ejecutando auto_horas_pico
+[2026-09-22T23:48:39.070350] ✅ Análisis de horas pico generado
+[2026-09-22T23:48:49.302607] ▶️ Ejecutando auto_rentabilidad
+[2026-09-22T23:48:49.304459] ⏭️ Análisis de rentabilidad desde 2026-09-21 ya fue procesado, se omite
+[2026-09-22T23:48:55.449796] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:48:55.451564] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-22T23:50:05.795118] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:50:07.619737] ✅ Predicción de demanda generada
+[2026-09-22T23:51:24.474270] ▶️ Ejecutando auto_prediccion_demanda
+[2026-09-22T23:51:24.475403] ⏭️ Predicción de 2026-09-22 ya fue procesada, se omite
+[2026-09-23T00:02:46.198057] ▶️ Ejecutando auto_resumen_semanal
+[2026-09-23T00:02:46.200153] ⏭️ Corte semanal desde 2026-09-21 ya fue procesado, se omite
+[2026-09-23T00:02:47.964114] ▶️ Ejecutando auto_alerta_stock
+[2026-09-23T00:02:49.488549] ▶️ Ejecutando auto_reporte_diario
+[2026-09-23T00:02:49.494919] ⚠️ Sin ventas hoy, se omite reporte
+[2026-09-23T00:02:49.997539] ⚠️ 5 productos críticos detectados
