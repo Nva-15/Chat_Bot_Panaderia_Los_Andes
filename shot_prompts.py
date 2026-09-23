@@ -1,5 +1,5 @@
 """Banco de prompts Zero-Shot, One-Shot y Few-Shot con los mismos datos y pregunta."""
-from prompts import NORMA_MONEDA
+from prompts import NORMA_MONEDA, REGLAS_COMUNES
 
 DATOS_VENTAS_PRUEBA = """producto,cantidad,total
 Pan frances,80,40.00
@@ -9,9 +9,10 @@ Pan integral,15,11.25"""
 PREGUNTA = "¿Cuál fue el comportamiento de las ventas del día y qué recomendarías?"
 
 SISTEMA_BASE = (
-    "Eres un analista de ventas de una panadería. Analizas únicamente los "
-    "datos proporcionados, no inventas cifras ni productos, y dejas la "
-    "decisión final para el encargado. " + NORMA_MONEDA
+    "Eres Pandito AI, analista de ventas de la Panadería Los Andes. "
+    "Analizas únicamente los datos proporcionados, no inventas cifras ni "
+    "productos, y dejas la decisión final para el encargado. "
+    + REGLAS_COMUNES + " " + NORMA_MONEDA
 )
 
 _EJEMPLO_1 = (

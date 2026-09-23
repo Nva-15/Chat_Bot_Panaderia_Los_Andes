@@ -1,10 +1,22 @@
 import streamlit as st
+
+# ============================================================
+# 🔑 PASO 1: set_page_config DEBE ser la primera llamada a Streamlit
+# ============================================================
+st.set_page_config(
+    page_title="Panadería Los Andes",
+    page_icon="🥖",
+    layout="wide"
+)
+
+# ============================================================
+# 🔑 PASO 2: Resto de imports
+# ============================================================
 from datetime import date, datetime, timedelta
 import pandas as pd
 
-# Iniciar scheduler al arrancar la app
+from inicializar_entorno import inicializar_entorno
 from scheduler import iniciar_scheduler, listar_tareas, ejecutar_ahora
-from init_db import inicializar_db
 from prompts import PROMPTS, NORMA_MONEDA
 from chatbot import consultar_groq
 from pdf_export import generar_pdf_reporte, generar_pdf_comparacion
@@ -16,24 +28,33 @@ from database import (
     marcar_notificacion_leida, limpiar_notificaciones_leidas, obtener_ultimo_reporte
 )
 
-# ---- Inicialización única ----
+# ============================================================
+# 🔑 PASO 3: Inicialización del entorno (BD + datos + ventas de hoy)
+# Se ejecuta una sola vez por sesión de servidor gracias a @st.cache_resource
+# ============================================================
+inicializar_entorno()
+
+# ============================================================
+# 🔑 PASO 4: Iniciar scheduler (una vez por sesión del navegador)
+# ============================================================
 if "scheduler_iniciado" not in st.session_state:
-    inicializar_db()
     try:
         iniciar_scheduler()
     except Exception as e:
         print(f"Scheduler ya iniciado: {e}")
     st.session_state.scheduler_iniciado = True
 
-# ---- Configuración de la app ----
-st.set_page_config(page_title="Panadería Los Andes", page_icon="🥖", layout="wide")
-
+# ============================================================
+# 🔑 PASO 5: Estado inicial de la sesión
+# ============================================================
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "role" not in st.session_state:
     st.session_state.role = None
 
-# ---- Login ----
+# ============================================================
+# LOGIN
+# ============================================================
 if st.session_state.role is None:
     st.title("🥖 Panadería Los Andes")
     st.subheader("Acceso interno")
@@ -47,22 +68,29 @@ if st.session_state.role is None:
             st.rerun()
     st.stop()
 
-# ---- Sidebar ----
+# ============================================================
+# SIDEBAR
+# ============================================================
 with st.sidebar:
     st.title("🥖 Los Andes")
     st.write(f"👤 **{st.session_state.usuario}**")
     st.write(f"🔑 **{st.session_state.role}**")
     st.divider()
 
-    MENU_OPCIONES = ["💬 Chatbot", "📊 Reportes IA", "🧪 Zero/One/Few-Shot", "📦 Inventario",
-                      "⚙️ Automatizaciones", "🔔 Notificaciones", "ℹ️ Ayuda"]
+    MENU_OPCIONES = [
+        "💬 Chatbot", "📊 Reportes IA", "🧪 Zero/One/Few-Shot",
+        "📦 Inventario", "⚙️ Automatizaciones", "🔔 Notificaciones", "ℹ️ Ayuda"
+    ]
     if "menu_opcion" not in st.session_state:
         st.session_state.menu_opcion = MENU_OPCIONES[0]
 
     # 🔔 Notificaciones pendientes
     pendientes = obtener_notificaciones_no_leidas()
     if not pendientes.empty:
-        if st.button(f"🔔 {len(pendientes)} notificaciones pendientes", use_container_width=True):
+        if st.button(
+            f"🔔 {len(pendientes)} notificaciones pendientes",
+            use_container_width=True
+        ):
             st.session_state.menu_opcion = "🔔 Notificaciones"
             st.rerun()
 
@@ -73,7 +101,9 @@ with st.sidebar:
         st.session_state.messages = []
         st.rerun()
 
-# ---- CHATBOT ----
+# ============================================================
+# CHATBOT
+# ============================================================
 if opcion == "💬 Chatbot":
     st.header("🤖 Pandito AI")
     for msg in st.session_state.messages:
@@ -85,21 +115,9 @@ if opcion == "💬 Chatbot":
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Detección simple de intención. Si el mensaje no trae ninguna
-        # palabra clave (ej. "ayer" suelto, o un typo), no se manda al
-        # asistente de ayuda genérico: se sigue con el último tema tratado.
+        # Detección simple de intención
         p = prompt.lower()
         if any(w in p for w in ["venta", "vend", "ingreso"]):
-            intent = "ventas"
-        elif any(w in p for w in ["stock", "queda", "inventario"]):
-            intent = "stock"
-        elif any(w in p for w in ["ayuda", "como uso", "cómo uso", "no entiendo", "help"]):
-            intent = "ayuda"
-        else:
-            intent = st.session_state.get("ultimo_intent", "ventas")
-        st.session_state.ultimo_intent = intent
-
-        if intent == "ventas":
             cfg = PROMPTS["P19_consulta_ventas"]
             hoy_iso = date.today().isoformat()
             ayer_iso = (date.today() - timedelta(days=1)).isoformat()
@@ -108,40 +126,38 @@ if opcion == "💬 Chatbot":
             elif "hoy" in p:
                 fecha_consulta = hoy_iso
             else:
-                # Sin fecha explícita: sigue con la última fecha de la que
-                # se venía hablando (ej. una pregunta de seguimiento).
-                fecha_consulta = st.session_state.get("fecha_consulta_ventas", hoy_iso)
+                fecha_consulta = st.session_state.get(
+                    "fecha_consulta_ventas", hoy_iso
+                )
             st.session_state.fecha_consulta_ventas = fecha_consulta
-            etiqueta = ("hoy" if fecha_consulta == hoy_iso else
-                        "ayer" if fecha_consulta == ayer_iso else fecha_consulta)
+
+            etiqueta = (
+                "hoy" if fecha_consulta == hoy_iso
+                else "ayer" if fecha_consulta == ayer_iso
+                else fecha_consulta
+            )
             etiqueta = f"{etiqueta} ({fecha_consulta})"
+
             ventas = obtener_ventas_dia(fecha_consulta)
             total = round(ventas["total"].sum(), 2) if not ventas.empty else 0.0
             top = obtener_top_productos(fecha_consulta)
-            if top.empty:
-                detalle = "Sin ventas registradas ese día."
-            else:
-                detalle = "\n".join(
-                    f"- {f['producto']}: {f['cantidad']} unidades, monto exacto vendido S/ {f['total']:.2f}"
-                    for f in top.to_dict("records")
-                )
             datos = (
                 f"Total vendido {etiqueta}: S/ {total:.2f}\n"
-                f"Ventas por producto ese día (cada producto ya tiene su monto EXACTO, "
-                f"no calcules ni repartas el total general entre productos):\n"
-                f"{detalle}"
+                f"Detalle por producto ese día (cantidad y monto en soles):\n"
+                f"{top.to_csv(index=False) if not top.empty else 'Sin ventas registradas ese día.'}"
             )
             user_prompt = cfg["usuario"].format(pregunta=prompt, datos=datos)
-        elif intent == "stock":
+
+        elif any(w in p for w in ["stock", "queda", "inventario"]):
             cfg = PROMPTS["P18_consulta_stock"]
             datos = obtener_stock().to_csv(index=False)
             user_prompt = cfg["usuario"].format(pregunta=prompt, datos=datos)
+
         else:
             cfg = PROMPTS["P20_ayuda_sistema"]
             user_prompt = cfg["usuario"].format(pregunta=prompt)
 
-        # Historial previo (sin el mensaje que se acaba de agregar), acotado
-        # a los últimos turnos para no crecer sin límite.
+        # Historial previo acotado
         historial = st.session_state.messages[:-1][-10:]
 
         with st.chat_message("assistant"):
@@ -160,7 +176,9 @@ if opcion == "💬 Chatbot":
                 {"role": "assistant", "content": respuesta}
             )
 
-# ---- REPORTES IA (manuales) ----
+# ============================================================
+# REPORTES IA (manuales)
+# ============================================================
 elif opcion == "📊 Reportes IA":
     st.header("📊 Reportes Generados por IA")
     st.caption("Estos reportes también se generan automáticamente según el cronograma.")
@@ -169,6 +187,7 @@ elif opcion == "📊 Reportes IA":
         st.session_state.reporte_actual = None
 
     col1, col2, col3 = st.columns(3)
+
     with col1:
         if st.button("📈 Reporte diario"):
             with st.spinner("Generando..."):
@@ -190,6 +209,7 @@ elif opcion == "📊 Reportes IA":
                         ]
                     } if not ventas.empty else None
                 }
+
     with col2:
         if st.button("📊 Resumen semanal"):
             with st.spinner("Generando..."):
@@ -211,6 +231,7 @@ elif opcion == "📊 Reportes IA":
                         ]
                     } if not ventas.empty else None
                 }
+
     with col3:
         if st.button("⚠️ Alerta stock"):
             with st.spinner("Analizando..."):
@@ -239,7 +260,9 @@ elif opcion == "📊 Reportes IA":
             )
         st.markdown(rep["contenido"])
 
-        pdf_bytes = generar_pdf_reporte(rep["titulo"], rep["contenido"], tabla_datos=rep["tabla"])
+        pdf_bytes = generar_pdf_reporte(
+            rep["titulo"], rep["contenido"], tabla_datos=rep["tabla"]
+        )
         st.download_button(
             "⬇️ Descargar en PDF",
             data=pdf_bytes,
@@ -247,7 +270,9 @@ elif opcion == "📊 Reportes IA":
             mime="application/pdf"
         )
 
-# ---- ZERO / ONE / FEW-SHOT ----
+# ============================================================
+# ZERO / ONE / FEW-SHOT
+# ============================================================
 elif opcion == "🧪 Zero/One/Few-Shot":
     st.header("🧪 Comparación de técnicas de prompting")
     st.caption(
@@ -289,7 +314,9 @@ elif opcion == "🧪 Zero/One/Few-Shot":
         )
         st.caption("Cada respuesta también queda guardada como evidencia en la carpeta `pruebas/`.")
 
-# ---- INVENTARIO ----
+# ============================================================
+# INVENTARIO
+# ============================================================
 elif opcion == "📦 Inventario":
     st.header("📦 Inventario Actual")
 
@@ -306,6 +333,7 @@ elif opcion == "📦 Inventario":
     st.divider()
     st.subheader("🧾 Registrar venta")
     st.caption("Estas ventas alimentan el reporte diario y el análisis de horas pico de hoy.")
+
     with st.form("registrar_venta"):
         producto_nombre = st.selectbox("Producto", stock["producto"])
         cantidad = st.number_input("Cantidad", min_value=1, value=1, step=1)
@@ -317,7 +345,9 @@ elif opcion == "📦 Inventario":
                 usuario=st.session_state.usuario
             )
             st.session_state.venta_confirmada = {
-                "producto": producto_nombre, "cantidad": int(cantidad), "total": total
+                "producto": producto_nombre,
+                "cantidad": int(cantidad),
+                "total": total
             }
             st.rerun()
 
@@ -328,7 +358,9 @@ elif opcion == "📦 Inventario":
             f"(S/ {v['total']:.2f})"
         )
 
-# ---- AUTOMATIZACIONES (panel de control) ----
+# ============================================================
+# AUTOMATIZACIONES
+# ============================================================
 elif opcion == "⚙️ Automatizaciones":
     st.header("⚙️ Panel de Automatizaciones")
     st.caption("Tareas programadas que se ejecutan sin intervención manual.")
@@ -358,7 +390,9 @@ elif opcion == "⚙️ Automatizaciones":
                 with st.spinner("Ejecutando..."):
                     resultado = ejecutar_ahora(t["id"])
                 st.session_state.resultado_automatizacion = {
-                    "nombre": t["nombre"], "job_id": t["id"], "contenido": resultado
+                    "nombre": t["nombre"],
+                    "job_id": t["id"],
+                    "contenido": resultado
                 }
                 st.rerun()
 
@@ -377,7 +411,8 @@ elif opcion == "⚙️ Automatizaciones":
             if ultimo:
                 contenido_mostrado, fecha_generacion = ultimo
                 st.info(
-                    f"Este corte ya se había generado el {fecha_generacion[:16].replace('T', ' ')}. "
+                    f"Este corte ya se había generado el "
+                    f"{fecha_generacion[:16].replace('T', ' ')}. "
                     "Mostrando ese último resultado:"
                 )
             else:
@@ -400,7 +435,9 @@ elif opcion == "⚙️ Automatizaciones":
                     key=f"pdf_{r['job_id']}"
                 )
 
-# ---- NOTIFICACIONES ----
+# ============================================================
+# NOTIFICACIONES
+# ============================================================
 elif opcion == "🔔 Notificaciones":
     st.header("🔔 Notificaciones del Sistema")
 
@@ -420,7 +457,9 @@ elif opcion == "🔔 Notificaciones":
                     marcar_notificacion_leida(n["id"])
                     st.rerun()
 
-# ---- AYUDA ----
+# ============================================================
+# AYUDA
+# ============================================================
 elif opcion == "ℹ️ Ayuda":
     st.header("ℹ️ Ayuda")
     st.markdown("""
