@@ -85,9 +85,21 @@ if opcion == "💬 Chatbot":
         with st.chat_message("user"):
             st.markdown(prompt)
 
-        # Detección simple de intención
+        # Detección simple de intención. Si el mensaje no trae ninguna
+        # palabra clave (ej. "ayer" suelto, o un typo), no se manda al
+        # asistente de ayuda genérico: se sigue con el último tema tratado.
         p = prompt.lower()
         if any(w in p for w in ["venta", "vend", "ingreso"]):
+            intent = "ventas"
+        elif any(w in p for w in ["stock", "queda", "inventario"]):
+            intent = "stock"
+        elif any(w in p for w in ["ayuda", "como uso", "cómo uso", "no entiendo", "help"]):
+            intent = "ayuda"
+        else:
+            intent = st.session_state.get("ultimo_intent", "ventas")
+        st.session_state.ultimo_intent = intent
+
+        if intent == "ventas":
             cfg = PROMPTS["P19_consulta_ventas"]
             hoy_iso = date.today().isoformat()
             ayer_iso = (date.today() - timedelta(days=1)).isoformat()
@@ -106,13 +118,21 @@ if opcion == "💬 Chatbot":
             ventas = obtener_ventas_dia(fecha_consulta)
             total = round(ventas["total"].sum(), 2) if not ventas.empty else 0.0
             top = obtener_top_productos(fecha_consulta)
+            if top.empty:
+                detalle = "Sin ventas registradas ese día."
+            else:
+                detalle = "\n".join(
+                    f"- {f['producto']}: {f['cantidad']} unidades, monto exacto vendido S/ {f['total']:.2f}"
+                    for f in top.to_dict("records")
+                )
             datos = (
                 f"Total vendido {etiqueta}: S/ {total:.2f}\n"
-                f"Detalle por producto ese día (cantidad y monto en soles):\n"
-                f"{top.to_csv(index=False) if not top.empty else 'Sin ventas registradas ese día.'}"
+                f"Ventas por producto ese día (cada producto ya tiene su monto EXACTO, "
+                f"no calcules ni repartas el total general entre productos):\n"
+                f"{detalle}"
             )
             user_prompt = cfg["usuario"].format(pregunta=prompt, datos=datos)
-        elif any(w in p for w in ["stock", "queda", "inventario"]):
+        elif intent == "stock":
             cfg = PROMPTS["P18_consulta_stock"]
             datos = obtener_stock().to_csv(index=False)
             user_prompt = cfg["usuario"].format(pregunta=prompt, datos=datos)
